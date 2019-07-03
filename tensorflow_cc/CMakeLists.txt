@@ -11,7 +11,8 @@ option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." ON)
 option(TENSORFLOW_STATIC "Build static library." ON)
 set(TENSORFLOW_TAG "v1.13.1" CACHE STRING "The tensorflow release tag to be checked out (default v1.13.1).")
-option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." OFF)
+option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
+
 
 # -------------
 # CMake Options
