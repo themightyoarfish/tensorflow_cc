@@ -13,10 +13,10 @@ option(TENSORFLOW_STATIC "Build static library." ON)
 set(TENSORFLOW_TAG "v1.13.1" CACHE STRING "The tensorflow release tag to be checked out (default v1.13.1).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
-if(${CMAKE_SYSTEM_NAME} MATCHES Darwin)
-    set(OS, macos)
-elseif(${CMAKE_SYSTEM_NAME} MATCHES Linux)
-    set(OS, linux)
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(OS "macos")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+    set(OS "linux")
 else()
     message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} is not a supported target OS")
 endif()
@@ -137,7 +137,7 @@ if(TENSORFLOW_STATIC)
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text"
   )
-  if(${OS} EQUAL macos)
+  if(${OS} EQUAL "macos")
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,-force_load"
