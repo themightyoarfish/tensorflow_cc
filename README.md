@@ -1,3 +1,11 @@
+Features of this fork:
+
+* Static library build with the Makefile works on macOS now
+
+Original Readme below
+
+-----
+
 # tensorflow_cc
 [![Build Status](http://ash.floop.cz:8080/buildStatus/icon?job=tensorflow_cc)](http://ash.floop.cz:8080/job/tensorflow_cc/)
 [![TF version](https://img.shields.io/badge/TF%20version-1.13.1-brightgreen.svg)]()
@@ -154,7 +162,7 @@ target_link_libraries(example TensorflowCC::Static)
 ```
 mkdir build && cd build
 cmake .. && make
-./example 
+./example
 ```
 
 If you are still unsure, consult the Dockerfiles for
