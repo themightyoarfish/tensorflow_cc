@@ -13,6 +13,13 @@ option(TENSORFLOW_STATIC "Build static library." ON)
 set(TENSORFLOW_TAG "v1.13.1" CACHE STRING "The tensorflow release tag to be checked out (default v1.13.1).")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
+if(${CMAKE_SYSTEM_NAME} MATCHES Darwin)
+    set(OS, macos)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES Linux)
+    set(OS, linux)
+else()
+    message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} is not a supported target OS")
+endif()
 
 # -------------
 # CMake Options
@@ -22,7 +29,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 include(CMakePackageConfigHelpers)
-set(CMAKECFG_INSTALL_DIR lib/cmake/TensorflowCC)
+set(CMAKECFG_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules/)
 
 # Configure the build_tensorflow script.
 configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
@@ -130,14 +137,24 @@ if(TENSORFLOW_STATIC)
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text"
   )
-  target_link_libraries(
-    tensorflow_cc_static INTERFACE
-    "-Wl,--allow-multiple-definition"
-    "-Wl,--whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a"
-    "-Wl,--no-whole-archive"
-    "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
-    dl pthread
-  )
+  if(${OS} EQUAL macos)
+      target_link_libraries(
+          tensorflow_cc_static INTERFACE
+          "-Wl,-force_load"
+          ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a
+          "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
+          dl pthread
+          )
+  else()
+      target_link_libraries(
+          tensorflow_cc_static INTERFACE
+          "-Wl,--allow-multiple-definition"
+          "-Wl,--whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a"
+          "-Wl,--no-whole-archive"
+          "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
+          dl pthread
+          )
+  endif()
   if(SYSTEM_PROTOBUF)
     target_include_directories(
       tensorflow_cc_static INTERFACE
@@ -234,7 +251,7 @@ endif()
 if(TENSORFLOW_STATIC)
   install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a"
-          "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/nsync/builds/default.linux.c++11/nsync.a"
+    "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/nsync/builds/default.${OS}.c++11/nsync.a"
     DESTINATION lib/tensorflow_cc
   )
 endif()
