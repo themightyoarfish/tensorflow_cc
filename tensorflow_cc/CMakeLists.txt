@@ -10,8 +10,8 @@ project(
 option(TENSORFLOW_SHARED "Build shared library (required for GPU support)." OFF)
 option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." ON)
 option(TENSORFLOW_STATIC "Build static library." ON)
-option(TENSORFLOW_TAG  "TensorFlow branch to use" "fix-macos-makefile2")
-option(TENSORFLOW_REMOTE  "TensorFlow repository to use" "https://github.com/themightyoarfish/tensorflow.git")
+option(TENSORFLOW_TAG  "TensorFlow branch to use" "master")
+option(TENSORFLOW_REMOTE  "TensorFlow repository to use" "https://github.com/tensorflow/tensorflow.git")
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
