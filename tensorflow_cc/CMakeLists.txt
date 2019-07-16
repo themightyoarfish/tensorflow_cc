@@ -22,6 +22,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 else()
     message(FATAL_ERROR "${CMAKE_SYSTEM_NAME} is not a supported target OS")
 endif()
+message(STATUS "Detected OS: ${OS}")
 
 # -------------
 # CMake Options
@@ -61,7 +62,7 @@ endif()
 if(SYSTEM_PROTOBUF)
   find_package(Protobuf REQUIRED)
   message(STATUS "Protobuf headers: ${Protobuf_INCLUDE_DIRS}")
-  message(STATUS "Protobuf headers: ${Protobuf_INCLUDE_DIRS}")
+  message(STATUS "Protobuf libraries: ${Protobuf_LIBRARIES}")
 endif()
 
 # ----------------------------------
@@ -141,7 +142,8 @@ if(TENSORFLOW_STATIC)
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text"
   )
-  if(${OS} EQUAL "macos")
+  if(OS EQUAL "macos")
+      message(STATUS "Using macOS-specific linker flags")
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,-force_load"
@@ -150,6 +152,7 @@ if(TENSORFLOW_STATIC)
           dl pthread
           )
   else()
+      message(STATUS "Using linux-specific linker flags")
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,--allow-multiple-definition"
