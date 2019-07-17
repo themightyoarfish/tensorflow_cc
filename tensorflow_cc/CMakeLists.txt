@@ -12,7 +12,7 @@ option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." 
 option(TENSORFLOW_STATIC "Build static library." ON)
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
-set(TENSORFLOW_TAG "bcad5ebd547d2af5cf3998c4aadc251f95794ba9" CACHE STRING "bcad5ebd547d2af5cf3998c4aadc251f95794ba9")
+set(TENSORFLOW_TAG "6e4aa5312d3132cc844a96436898db351a14c532" CACHE STRING "6e4aa5312d3132cc844a96436898db351a14c532")
 set(TENSORFLOW_REMOTE "https://github.com/themightyoarfish/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default official repository)")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
