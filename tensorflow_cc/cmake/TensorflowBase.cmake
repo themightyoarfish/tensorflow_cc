@@ -14,6 +14,7 @@ ExternalProject_Add(
     DOWNLOAD_DIR "tensorflow"
     SOURCE_DIR "tensorflow"
     BUILD_IN_SOURCE 1
+    CONFIGURE_COMMAND ""
     UPDATE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
