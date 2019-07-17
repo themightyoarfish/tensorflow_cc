@@ -142,13 +142,16 @@ if(TENSORFLOW_STATIC)
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto"
     "${CMAKE_INSTALL_PREFIX}/include/tensorflow/tensorflow/contrib/makefile/gen/proto_text"
   )
-  if(OS EQUAL "macos")
+  if(OS MATCHES "macos")
       message(STATUS "Using macOS-specific linker flags")
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,-force_load"
           ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a
           "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
+          "-framework CoreFoundation"   # this should be done in tensorflow's
+                                        # Makefile, but my fix which was recently proven and merge seems to not work
+                                        # there after all. wtf
           dl pthread
           )
   else()
