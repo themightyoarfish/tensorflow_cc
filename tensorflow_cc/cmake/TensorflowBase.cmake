@@ -8,6 +8,7 @@ ExternalProject_Add(
     tensorflow_base
     GIT_REPOSITORY "${TENSORFLOW_REMOTE}"
     GIT_TAG ${TENSORFLOW_TAG}
+    GIT_PROGRESS ON
     TMP_DIR "/tmp"
     STAMP_DIR "tensorflow-stamp"
     DOWNLOAD_DIR "tensorflow"
