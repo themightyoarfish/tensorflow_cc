@@ -12,8 +12,8 @@ option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." 
 option(TENSORFLOW_STATIC "Build static library." ON)
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
-set(TENSORFLOW_TAG "17343b2fce2c9455d06c9cc73cf5df6d618ab9a7" CACHE STRING "The git revision to use (default '17343b2fce2c9455d06c9cc73cf5df6d618ab9a7')")
-set(TENSORFLOW_REMOTE "https://github.com/tensorflow/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default official repository)")
+set(TENSORFLOW_TAG "bcad5ebd547d2af5cf3998c4aadc251f95794ba9" CACHE STRING "bcad5ebd547d2af5cf3998c4aadc251f95794ba9")
+set(TENSORFLOW_REMOTE "https://github.com/themightyoarfish/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default official repository)")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(OS "macos")
@@ -60,6 +60,8 @@ endif()
 # Define Shared Tensorflow Interface
 # ----------------------------------
 if(SYSTEM_PROTOBUF)
+  set(Protobuf_DEBUG ON)
+  set(Protobuf_USE_STATIC_LIBS ON)
   find_package(Protobuf REQUIRED)
   message(STATUS "Protobuf headers: ${Protobuf_INCLUDE_DIRS}")
   message(STATUS "Protobuf libraries: ${Protobuf_LIBRARIES}")

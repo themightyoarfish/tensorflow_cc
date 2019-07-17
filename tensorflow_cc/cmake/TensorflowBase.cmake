@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 include(ExternalProject)
 
+message(STATUS "Downloading Tensorflow from ${TENSORFLOW_REMOTE}")
+message(STATUS "Using Tensorflow tag ${TENSORFLOW_TAG}")
+
 if(SYSTEM_PROTOBUF)
     ExternalProject_Add(
         tensorflow_base
         GIT_REPOSITORY "${TENSORFLOW_REMOTE}"
-        GIT_TAG ${TENSOFLOW_TAG}
+        GIT_TAG ${TENSORFLOW_TAG}
         TMP_DIR "/tmp"
         STAMP_DIR "tensorflow-stamp"
         DOWNLOAD_DIR "tensorflow"
@@ -24,7 +27,7 @@ else()
     ExternalProject_Add(
         tensorflow_base
         GIT_REPOSITORY "${TENSORFLOW_REMOTE}"
-        GIT_TAG ${TENSOFLOW_TAG}
+        GIT_TAG ${TENSORFLOW_TAG}
         TMP_DIR "/tmp"
         STAMP_DIR "tensorflow-stamp"
         DOWNLOAD_DIR "tensorflow"
