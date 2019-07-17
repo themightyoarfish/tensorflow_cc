@@ -15,8 +15,6 @@ ExternalProject_Add(
     SOURCE_DIR "tensorflow"
     BUILD_IN_SOURCE 1
     UPDATE_COMMAND ""
-    CONFIGURE_COMMAND make -f tensorflow/contrib/makefile/Makefile clean
-    COMMAND tensorflow/contrib/makefile/download_dependencies.sh
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
     )

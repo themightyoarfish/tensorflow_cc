@@ -12,8 +12,11 @@ option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." 
 option(TENSORFLOW_STATIC "Build static library." ON)
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
-set(TENSORFLOW_TAG "6e4aa5312d3132cc844a96436898db351a14c532" CACHE STRING "6e4aa5312d3132cc844a96436898db351a14c532")
-set(TENSORFLOW_REMOTE "https://github.com/themightyoarfish/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default official repository)")
+set(TENSORFLOW_TAG "master" CACHE STRING "master")
+set(TENSORFLOW_REMOTE "https://github.com/themightyoarfish/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default themightyoarfish's fork)")
+
+set(DOWNLOAD_DEPENDENCIES ON)
+set(OPTFLAGS "-O0 -march=native")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(OS "macos")
@@ -36,6 +39,8 @@ set(CMAKECFG_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules/)
 
 # Configure the build_tensorflow script.
 configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
+
+configure_file("cmake/build_tensorflow_static.sh.in" "build_tensorflow_static.sh" @ONLY)
 
 # --------------------------------------------------------
 # Include External Projects for Shared / Static Tensorflow

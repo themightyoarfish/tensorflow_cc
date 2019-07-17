@@ -11,7 +11,7 @@ ExternalProject_Add(
   BUILD_IN_SOURCE 1
   DOWNLOAD_COMMAND ""
   UPDATE_COMMAND ""
-  CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/build.sh
+  CONFIGURE_COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/cmake/build_tensorflow_static.sh
             COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/cmake/copy_links.sh" .
             COMMAND ./copy_links.sh .
   BUILD_COMMAND ""
