@@ -15,8 +15,11 @@ option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from cont
 set(TENSORFLOW_TAG "master" CACHE STRING "master")
 set(TENSORFLOW_REMOTE "https://github.com/themightyoarfish/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default themightyoarfish's fork)")
 
-set(DOWNLOAD_DEPENDENCIES ON)
-set(OPTFLAGS "-O0 -march=native")
+option(DOWNLOAD_DEPENDENCIES ON)
+set(OPTFLAGS "-O0 -march=native" CACHE STRING "Optimizer flags to use")
+
+message(STATUS "Download dependencies? ${DOWNLOAD_DEPENDENCIES}")
+message(STATUS "Optimization flags: ${OPTFLAGS}")
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(OS "macos")
@@ -68,6 +71,7 @@ endif()
 # Define Shared Tensorflow Interface
 # ----------------------------------
 if(SYSTEM_PROTOBUF)
+  message(STATUS "Using system Protobuf")
   set(Protobuf_DEBUG ON)
   set(Protobuf_USE_STATIC_LIBS ON)
   find_package(Protobuf REQUIRED)
