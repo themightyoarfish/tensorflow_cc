@@ -37,10 +37,13 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib")
 include(CMakePackageConfigHelpers)
 set(CMAKECFG_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules/)
 
-# Configure the build_tensorflow script.
-configure_file("cmake/build_tensorflow.sh.in" "build_tensorflow.sh" @ONLY)
-
-configure_file("cmake/build_tensorflow_static.sh.in" "build_tensorflow_static.sh" @ONLY)
+if(TENSORFLOW_SHARED)
+    # Configure the build_tensorflow script.
+    configure_file("${CMAKE_CURRENT_LIST_DIR}/cmake/build_tensorflow.sh.in"
+        "${CMAKE_CURRENT_LIST_DIR}/cmake/build_tensorflow.sh" @ONLY)
+else()
+    configure_file("${CMAKE_CURRENT_LIST_DIR}/cmake/build_tensorflow_static.sh.in" "${CMAKE_CURRENT_LIST_DIR}/cmake/build_tensorflow_static.sh" @ONLY)
+endif()
 
 # --------------------------------------------------------
 # Include External Projects for Shared / Static Tensorflow
