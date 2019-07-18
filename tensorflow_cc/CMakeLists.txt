@@ -160,24 +160,23 @@ if(TENSORFLOW_STATIC)
       message(STATUS "Using macOS-specific linker flags")
       target_link_libraries(
           tensorflow_cc_static INTERFACE
-          "-Wl,-force_load"
-          ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.so
-          "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
+          "-Wl,-force_load ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.so"
+          "-Wl,-force_load ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
           "-framework CoreFoundation"   # this should be done in tensorflow's
-                                        # Makefile, but my fix which was recently proven and merge seems to not work
+                                        # Makefile, but my fix which was recently proven and merged seems to not work
                                         # there after all. wtf
-          dl pthread
+          dl
+          pthread
           )
   else()
       message(STATUS "Using linux-specific linker flags")
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,--allow-multiple-definition"
-          "-Wl,--whole-archive
-          ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.so"
-          "-Wl,--no-whole-archive"
-          "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
-          dl pthread
+          "-Wl,--whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.so"
+          "-Wl,--no-whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
+          dl
+          pthread
           )
   endif()
   if(SYSTEM_PROTOBUF)
