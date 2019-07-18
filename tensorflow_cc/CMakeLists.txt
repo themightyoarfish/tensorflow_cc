@@ -12,7 +12,7 @@ option(ALLOW_CUDA "When building the shared library, try to find and use CUDA." 
 option(TENSORFLOW_STATIC "Build static library." ON)
 option(SYSTEM_PROTOBUF "Use system protobuf instead of static protobuf from contrib/makefile." ON)
 
-set(TENSORFLOW_TAG "master" CACHE STRING "master")
+set(TENSORFLOW_TAG "shared_library_makefile" CACHE STRING "shared_library_makefile")
 set(TENSORFLOW_REMOTE "https://github.com/themightyoarfish/tensorflow.git" CACHE STRING "The git remote to clone tensorflow from (default themightyoarfish's fork)")
 
 option(DOWNLOAD_DEPENDENCIES ON)
