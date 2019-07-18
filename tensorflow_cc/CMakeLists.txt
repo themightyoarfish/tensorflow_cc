@@ -161,7 +161,7 @@ if(TENSORFLOW_STATIC)
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,-force_load"
-          ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a
+          ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.so
           "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
           "-framework CoreFoundation"   # this should be done in tensorflow's
                                         # Makefile, but my fix which was recently proven and merge seems to not work
@@ -173,7 +173,8 @@ if(TENSORFLOW_STATIC)
       target_link_libraries(
           tensorflow_cc_static INTERFACE
           "-Wl,--allow-multiple-definition"
-          "-Wl,--whole-archive ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.a"
+          "-Wl,--whole-archive
+          ${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/libtensorflow-core.so"
           "-Wl,--no-whole-archive"
           "${CMAKE_INSTALL_PREFIX}/lib/tensorflow_cc/nsync.a"
           dl pthread
@@ -274,7 +275,8 @@ endif()
 # static library specific
 if(TENSORFLOW_STATIC)
   install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a"
+    FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/gen/lib/libtensorflow-core.so"
     "${CMAKE_CURRENT_BINARY_DIR}/tensorflow/tensorflow/contrib/makefile/downloads/nsync/builds/default.${OS}.c++11/nsync.a"
     DESTINATION lib/tensorflow_cc
   )
